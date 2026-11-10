@@ -53,10 +53,21 @@
         </a>
         <a class="btn btn--ghost btn--lg" href="#areas">Ver como podemos ajudar</a>
       </div>
+      <nav class="topics" aria-label="Encontre o seu assunto">
+        <p>Encontre o seu assunto:</p>
+        <ul>
+          <li><a href="#obra">Atraso de obra</a></li>
+          <li><a href="#contratos">Compra e venda</a></li>
+          <li><a href="#locacao">Locação</a></li>
+          <li><a href="#inventario">Inventário</a></li>
+          <li><a href="#usucapiao">Usucapião</a></li>
+          <li><a href="#regularizacao">Regularização</a></li>
+        </ul>
+      </nav>
       <ul class="chips" aria-label="Diferenciais">
         <li><b>+20 anos</b> de advocacia</li>
         <li>Ex-gerente de vendas em <b>grandes construtoras</b></li>
-        <li>Atuação <b>judicial e extrajudicial</b></li>
+        <li>Atendimento <b>online e presencial</b> em São Paulo</li>
       </ul>
     </div>
 
@@ -71,29 +82,39 @@
 <section class="section situ" id="situacao">
   <div class="shell">
     <header class="sec-head">
-      <p class="eyebrow">Qual é a sua situação?</p>
-      <h2>Escolha a que mais se parece com a sua e fale direto com a gente</h2>
+      <p class="eyebrow">Temas que atendemos</p>
+      <h2>Encontre o seu assunto. Veja como resolvemos ou fale direto com a gente</h2>
     </header>
     <div class="situ__grid">
-      <a class="situ__card" href="#" data-wa="situacao" data-area="obra">
+      <article class="situ__card">
         <span class="situ__n">01</span>
         <h3>A obra atrasou e as chaves não saíram</h3>
         <p>A construtora passou do prazo, não entrega a posse ou o imóvel apresentou defeitos.</p>
-        <span class="more">Falar sobre atraso de obra →</span>
-      </a>
-      <a class="situ__card" href="#" data-wa="situacao" data-area="contratos">
+        <div class="situ__act">
+          <a class="more" href="#obra">Ver atraso de obra →</a>
+          <button type="button" class="btn btn--wa btn--sm" data-wa="indice" data-area="obra"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp</button>
+        </div>
+      </article>
+      <article class="situ__card">
         <span class="situ__n">02</span>
         <h3>Preciso de um contrato seguro ou desfazer um negócio</h3>
         <p>Compra e venda, locação, distrato ou rescisão. Antes de assinar ou quando algo deu errado.</p>
-        <span class="more">Falar sobre contratos →</span>
-      </a>
-      <a class="situ__card" href="#" data-wa="situacao" data-area="inventario">
+        <div class="situ__act">
+          <a class="more" href="#contratos">Ver contratos →</a>
+          <button type="button" class="btn btn--wa btn--sm" data-wa="indice" data-area="contratos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp</button>
+        </div>
+      </article>
+      <article class="situ__card">
         <span class="situ__n">03</span>
         <h3>O imóvel não está no meu nome ou há inventário pendente</h3>
         <p>Contrato de gaveta, falecimento sem inventário, usucapião ou documentação irregular.</p>
-        <span class="more">Falar sobre regularização →</span>
-      </a>
+        <div class="situ__act">
+          <a class="more" href="#inventario">Ver regularização →</a>
+          <button type="button" class="btn btn--wa btn--sm" data-wa="indice" data-area="inventario"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp</button>
+        </div>
+      </article>
     </div>
+    <p class="situ__other">Não encontrou a sua situação? Atuamos em outras questões de Direito Imobiliário. <button type="button" class="linkbtn" data-wa="indice" data-area="padrao">Conte seu caso →</button></p>
   </div>
 </section>
 
@@ -144,7 +165,7 @@
         <ul class="ticks">
           <li>Análise jurídica da documentação do imóvel e dos vendedores</li>
           <li>Elaboração, análise e revisão de contratos de compra e venda</li>
-          <li>Contratos de locação residencial e comercial</li>
+          <li id="locacao">Contratos de locação residencial e comercial</li>
           <li>Ações de despejo e cobrança de aluguéis e encargos</li>
           <li>Ações revisionais e renovatórias de aluguel</li>
           <li>Renegociação e revisão de contratos</li>
@@ -168,8 +189,8 @@
         </div>
         <ul class="ticks">
           <li>Inventários e partilhas envolvendo bens imóveis</li>
-          <li>Usucapião</li>
-          <li>Regularização de imóvel comprado por contrato de gaveta</li>
+          <li id="usucapiao">Usucapião</li>
+          <li id="regularizacao">Regularização de imóvel comprado por contrato de gaveta</li>
           <li>Adjudicação compulsória, judicial e extrajudicial</li>
           <li>Retificação de matrícula e registro imobiliário</li>
           <li>Regularização de construção e averbação de área</li>
@@ -198,12 +219,13 @@
         </figure>
         <div class="person__txt">
           <h3>Dra. Sandra</h3>
-          <p class="role">Advogada desde 2005 · OAB/__ 000.000</p>
+          <p class="role">Advogada desde 2005 · OAB/SP 240.075</p>
           <p>Conhece o mercado imobiliário por dentro: foi gerente de vendas em algumas das maiores construtoras do Brasil e atua como advogada há mais de 20 anos. Entende na prática as negociações, os contratos e a relação entre construtoras e compradores.</p>
           <ul class="mini">
             <li>Atraso de obra e contratos imobiliários</li>
             <li>Vivência com grandes construtoras</li>
             <li>Negociação e visão prática do setor</li>
+            <li>Comissão de Direito Sistêmico e palestra sobre Reforma Tributária no mercado imobiliário</li>
           </ul>
         </div>
       </article>
@@ -224,6 +246,8 @@
         </div>
       </article>
     </div>
+
+    <blockquote class="quote">“Mais do que conhecer a lei, é preciso compreender a realidade de cada cliente.”<cite>Dra. Sandra</cite></blockquote>
 
     <div class="numbers">
       <div><b>+20</b><span>anos de advocacia (Sandra)</span></div>
@@ -251,61 +275,6 @@
   </div>
 </section>
 
-<!-- ============ PRÉ-QUALIFICAÇÃO ============ -->
-<section class="section section--dark quiz-section" id="quiz">
-  <div class="shell quiz-wrap">
-    <header class="sec-head sec-head--light">
-      <p class="eyebrow">Atendimento direcionado</p>
-      <h2>Conte em 3 passos. Já chegamos sabendo o seu caso.</h2>
-      <p>Assim a conversa começa objetiva e a gente sabe se consegue te ajudar.</p>
-    </header>
-
-    <form class="quiz" id="quizForm" novalidate>
-      <div class="quiz__bar"><i id="quizBar"></i></div>
-
-      <fieldset class="quiz__step is-active" data-step="1">
-        <legend>1. Qual é a sua situação?</legend>
-        <label class="opt"><input type="radio" name="area" value="Atraso na entrega de obra / imóvel na planta"><span>Atraso na entrega de obra ou imóvel na planta</span></label>
-        <label class="opt"><input type="radio" name="area" value="Contrato de compra e venda ou locação"><span>Contrato de compra e venda ou locação</span></label>
-        <label class="opt"><input type="radio" name="area" value="Inventário de imóvel"><span>Inventário com imóvel</span></label>
-        <label class="opt"><input type="radio" name="area" value="Regularização de imóvel / usucapião"><span>Regularização de imóvel ou usucapião</span></label>
-        <label class="opt"><input type="radio" name="area" value="Outra questão imobiliária"><span>Outra questão imobiliária</span></label>
-      </fieldset>
-
-      <fieldset class="quiz__step" data-step="2">
-        <legend>2. Onde fica o imóvel?</legend>
-        <label class="field"><span>Cidade e estado</span>
-          <input type="text" name="cidade" placeholder="Ex.: São Paulo, SP" autocomplete="address-level2"></label>
-        <label class="field"><span>Em que momento está o caso?</span>
-          <select name="momento">
-            <option value="">Selecione</option>
-            <option>Ainda não tomei nenhuma providência</option>
-            <option>Já notifiquei ou conversei com a outra parte</option>
-            <option>Já existe processo em andamento</option>
-            <option>Quero apenas me informar antes de decidir</option>
-          </select></label>
-        <p class="quiz__note" id="quizRegion" role="status" hidden></p>
-      </fieldset>
-
-      <fieldset class="quiz__step" data-step="3">
-        <legend>3. Como podemos te chamar?</legend>
-        <label class="field"><span>Seu nome</span>
-          <input type="text" name="nome" placeholder="Seu nome" autocomplete="name"></label>
-        <label class="field"><span>Resumo do caso (opcional)</span>
-          <textarea name="resumo" rows="3" placeholder="Conte em poucas linhas o que aconteceu"></textarea></label>
-        <p class="quiz__lgpd">Ao continuar, você será direcionado ao WhatsApp. Usamos suas informações apenas para atender seu contato.</p>
-      </fieldset>
-
-      <p class="quiz__err" id="quizErr" role="alert" hidden></p>
-      <div class="quiz__nav">
-        <button type="button" class="btn btn--ghost-light" id="quizBack" hidden>Voltar</button>
-        <button type="button" class="btn btn--copper" id="quizNext">Continuar</button>
-        <button type="submit" class="btn btn--wa" id="quizSend" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Enviar pelo WhatsApp</button>
-      </div>
-    </form>
-  </div>
-</section>
-
 <!-- ============ FAQ ============ -->
 <section class="section faq" id="faq">
   <div class="shell faq__in">
@@ -322,10 +291,14 @@
         <p>Sem inventário, em muitos casos não é possível concluir a transferência do imóvel. Orientamos sobre o procedimento adequado, consensual ou judicial, para regularizar a situação e dar segurança à família.</p></details>
       <details><summary>Vocês também revisam contratos antes da assinatura?</summary>
         <p>Sim. Elaboramos, analisamos e revisamos contratos de compra e venda e de locação, residencial ou comercial, para prevenir riscos antes que virem problema.</p></details>
+      <details><summary>Meu caso não está na lista. Posso entrar em contato?</summary>
+        <p>Pode. As áreas acima são as mais frequentes, mas não limitam a nossa atuação. Conte brevemente sua situação para uma avaliação inicial.</p></details>
+      <details><summary>Quais documentos devo enviar no primeiro contato?</summary>
+        <p>No primeiro contato basta uma breve explicação do que aconteceu. Depois, indicamos os documentos necessários conforme o tipo de imóvel, negócio ou conflito.</p></details>
       <details><summary>Com quem eu vou falar?</summary>
         <p>O atendimento é feito diretamente pelas advogadas, Dra. Sandra e Dra. Roberta, conforme a natureza do seu caso.</p></details>
       <details><summary>Atendem online?</summary>
-        <p>Sim. O primeiro contato é pelo WhatsApp e o atendimento pode ser feito online. Confirme com a equipe a modalidade ideal para o seu caso.</p></details>
+        <p>Sim. O atendimento pode ser online ou presencial, em São Paulo, mediante agendamento e conforme a necessidade do seu caso. O primeiro contato é pelo WhatsApp.</p></details>
     </div>
   </div>
 </section>
@@ -348,7 +321,7 @@
       <p class="muted" id="fAddr">Endereço e modalidade de atendimento a confirmar.</p>
     </div>
     <div class="muted">
-      <p>Dra. Sandra · OAB/__ 000.000<br>Dra. Roberta · OAB/__ 000.000</p>
+      <p>Dra. Sandra · OAB/SP 240.075<br>Dra. Roberta · OAB/__ 000.000</p>
       <p><a href="#" data-wa="rodape">WhatsApp</a> · <a href="#" id="fInsta" hidden>Instagram</a></p>
     </div>
   </div>
@@ -362,6 +335,32 @@
 <a class="fab" href="#" data-wa="flutuante" aria-label="Falar pelo WhatsApp">
   <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg><span>Falar agora</span>
 </a>
+
+<!-- Formulário de contato (abre ao clicar em qualquer botão de WhatsApp) -->
+<dialog class="leadmodal" id="leadModal" aria-labelledby="leadTitle">
+  <form method="dialog" id="leadForm" novalidate>
+    <button type="button" class="lead__x" id="leadClose" aria-label="Fechar">×</button>
+    <p class="eyebrow">Atendimento pelo WhatsApp</p>
+    <h2 id="leadTitle">Antes de abrir a conversa</h2>
+    <p class="lead__sub">Preencha para as advogadas já saberem quem é você e o que precisa.</p>
+    <label class="field"><span>Seu nome</span><input type="text" name="nome" autocomplete="name" placeholder="Nome e sobrenome" required></label>
+    <label class="field"><span>Telefone com DDD</span><input type="tel" name="telefone" inputmode="numeric" autocomplete="tel-national" placeholder="(11) 90000-0000" required></label>
+    <label class="field"><span>Do que você precisa?</span>
+      <select name="servico" required>
+        <option value="">Selecione o serviço</option>
+        <option>Atraso na entrega de obra / imóvel na planta</option>
+        <option>Contrato de compra e venda / distrato</option>
+        <option>Contrato de locação</option>
+        <option>Inventário e partilha de imóveis</option>
+        <option>Usucapião</option>
+        <option>Regularização de imóvel</option>
+        <option>Outra questão imobiliária</option>
+      </select></label>
+    <label class="check" id="leadConsentBox"><input type="checkbox" name="aceite"><span>Concordo em compartilhar meus dados para ser atendido(a) e com o uso de cookies para medir os anúncios.</span></label>
+    <p class="lead__err" id="leadErr" role="alert" hidden></p>
+    <button type="submit" class="btn btn--wa btn--lg lead__go"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Continuar para o WhatsApp</button>
+  </form>
+</dialog>
 
 <!-- Consentimento (LGPD) -->
 <div class="consent" id="consent" role="dialog" aria-label="Cookies" hidden>
