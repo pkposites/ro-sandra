@@ -69,7 +69,7 @@ const TEMA = temaAtual();
   const cta = $(".hero [data-wa=hero]");
   cta.lastChild.textContent = " " + t.cta;
   document.body.dataset.tema = TEMA;
-  document.title = `${t.eyebrow} | Sandra & Roberta Advogadas`;
+  document.title = `${t.eyebrow} | Sandra Quaresma e Roberta Moreira`;
   const alvo = $("#" + TEMA);
   if (alvo && location.hash === "#" + TEMA) addEventListener("load", () => alvo.scrollIntoView());
 })();
@@ -130,7 +130,7 @@ $$(".photo").forEach(async (fig) => {
   if (img) { fig.classList.add("has-img"); fig.prepend(img); return; }
   // Sem foto da dupla: usa as fotos individuais lado a lado, se existirem
   if (fig.classList.contains("hero__photo")) {
-    const [a, b] = await Promise.all([carregarImg("assets/img/sandra.jpg", "Dra. Sandra"), carregarImg("assets/img/roberta.jpg", "Dra. Roberta")]);
+    const [a, b] = await Promise.all([carregarImg("assets/img/sandra.jpg", "Dra. Sandra Quaresma"), carregarImg("assets/img/roberta.jpg", "Dra. Roberta Moreira")]);
     if (a || b) {
       fig.classList.add("has-img", "is-duo");
       [a, b].filter(Boolean).forEach((i) => fig.prepend(i));
