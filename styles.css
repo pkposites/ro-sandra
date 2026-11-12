@@ -247,6 +247,8 @@ img{max-width:100%;display:block}
 .topics__g ul{display:flex;flex-wrap:wrap;gap:6px 8px}
 .topics a{padding:7px 14px;font-size:13.5px;font-weight:600}
 .ticks li{scroll-margin-top:110px}
+.ticks li.is-hl{background:rgba(202,144,109,.2);border-radius:8px;padding-left:38px;color:#fff;font-weight:600;transition:background .3s}
+.ticks li.is-hl::before{left:8px}
 .brand__txt{font-size:19px}
 .brand__txt small{white-space:nowrap}
 .situ__act{justify-content:flex-start}

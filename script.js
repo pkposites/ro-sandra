@@ -202,7 +202,16 @@ form.addEventListener("submit", (e) => {
 });
 
 /* ---------- Medição: qual assunto a pessoa clicou ---------- */
-$$(".topics a").forEach((a) => a.addEventListener("click", () => dataLayer.push({ event: "topic_click", tema: a.textContent.trim() })));
+// Cada botão leva ao início do bloco que explica o assunto e destaca o item dentro dele
+$$(".topics a").forEach((a) => a.addEventListener("click", (e) => {
+  dataLayer.push({ event: "topic_click", tema: a.textContent.trim() });
+  const bloco = $(a.getAttribute("href")), item = $("#" + a.dataset.item);
+  if (!bloco) return;
+  e.preventDefault();
+  bloco.scrollIntoView({ behavior: "smooth", block: "start" });
+  $$(".ticks li.is-hl").forEach((x) => x.classList.remove("is-hl"));
+  if (item) { item.classList.add("is-hl"); setTimeout(() => item.classList.remove("is-hl"), 6000); }
+}));
 
 /* ---------- Barra superior ao rolar ---------- */
 const topbar = $(".topbar");
