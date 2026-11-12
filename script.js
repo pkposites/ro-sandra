@@ -202,15 +202,16 @@ form.addEventListener("submit", (e) => {
 });
 
 /* ---------- Medição: qual assunto a pessoa clicou ---------- */
-// Cada botão leva ao início do bloco que explica o assunto e destaca o item dentro dele
+// Cada botão rola (suave, descontando o header fixo via scroll-margin-top) até o item do seu tema e o destaca
 $$(".topics a").forEach((a) => a.addEventListener("click", (e) => {
   dataLayer.push({ event: "topic_click", tema: a.textContent.trim() });
-  const bloco = $(a.getAttribute("href")), item = $("#" + a.dataset.item);
-  if (!bloco) return;
+  const item = $(a.getAttribute("href"));
+  if (!item) return;
   e.preventDefault();
-  bloco.scrollIntoView({ behavior: "smooth", block: "start" });
+  item.scrollIntoView({ behavior: "smooth", block: "start" });
   $$(".ticks li.is-hl").forEach((x) => x.classList.remove("is-hl"));
-  if (item) { item.classList.add("is-hl"); setTimeout(() => item.classList.remove("is-hl"), 6000); }
+  item.classList.add("is-hl");
+  setTimeout(() => item.classList.remove("is-hl"), 6000);
 }));
 
 /* ---------- Barra superior ao rolar ---------- */
