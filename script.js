@@ -201,6 +201,9 @@ form.addEventListener("submit", (e) => {
   fechar();
 });
 
+/* ---------- Medição: qual assunto a pessoa clicou ---------- */
+$$(".topics a").forEach((a) => a.addEventListener("click", () => dataLayer.push({ event: "topic_click", tema: a.textContent.trim() })));
+
 /* ---------- Barra superior ao rolar ---------- */
 const topbar = $(".topbar");
 addEventListener("scroll", () => topbar.classList.toggle("is-scrolled", scrollY > 20), { passive: true });

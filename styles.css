@@ -238,3 +238,19 @@ img{max-width:100%;display:block}
 .lead__go{width:100%}
 
 @media (max-width:960px){.hero__photo{aspect-ratio:5/4!important;max-width:520px}.hero__photo img{object-position:center 20%}}
+
+/* ===== Ajustes (retorno das advogadas) ===== */
+.topics{margin-top:26px;display:grid;gap:14px}
+.topics__title{margin:0!important}
+.topics__g{display:grid;gap:8px}
+.topics__g>span{font:600 17px/1.2 "Cormorant Garamond",serif;color:var(--copper-700)}
+.topics__g ul{display:flex;flex-wrap:wrap;gap:6px 8px}
+.topics a{padding:7px 14px;font-size:13.5px;font-weight:600}
+.ticks li{scroll-margin-top:110px}
+.brand__txt{font-size:19px}
+.brand__txt small{white-space:nowrap}
+.situ__act{justify-content:flex-start}
+@media (max-width:620px){
+  .topbar .btn--wa{display:none}
+  .brand__txt{font-size:17px;line-height:1.15}
+}
