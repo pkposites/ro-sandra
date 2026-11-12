@@ -7,7 +7,7 @@ LP estática (HTML/CSS/JS), mesmo formato da página da Ludmilla. Foco: levar o 
 - `regioesAtendidas`, `endereco`, `instagram`
 - `gtmId` / `metaPixelId`: rastreamento (só carrega após aceite de cookies)
 - OAB das duas (index.html, seção "Quem somos" e rodapé)
-- Fotos em `assets/img/`: `sandra-e-roberta.jpg`, `sandra.jpg`, `roberta.jpg` (vertical 4:5). Se o arquivo existir, substitui o espaço reservado
+- Fotos em `assets/img/`: `roberta-e-sandra.jpg`, `sandra.jpg`, `roberta.jpg` (vertical 4:5). Se o arquivo existir, substitui o espaço reservado
 - Links por tema: `/atraso-de-obra`, `/contratos`, `/inventario` (ou `?tema=obra|contratos|inventario`)
 - `leadhubKey`: chave pk_ do Cadê o Lead
 - Remover `<meta name="robots" content="noindex">` ao publicar
