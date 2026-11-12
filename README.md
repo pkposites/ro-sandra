@@ -16,3 +16,6 @@ LP estática (HTML/CSS/JS), mesmo formato da página da Ludmilla. Foco: levar o 
 `whatsapp_click` (local, área) e `lead_quiz` no dataLayer; `Contact`/`Lead` no Pixel. UTMs/gclid/fbclid guardados após consentimento.
 
 Teste local: `python3 -m http.server 8000`
+
+## Textos por tema (aguardando aprovação das advogadas)
+Os títulos e parágrafos de `/atraso-de-obra`, `/contratos` e `/inventario` ficam em `TEMAS` no `script.js`. A página principal usa só o texto já aprovado.
