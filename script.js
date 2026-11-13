@@ -121,7 +121,7 @@ if (CONFIG.instagram) { const i = $("#fInsta"); i.href = CONFIG.instagram; i.hid
 if (CONFIG.endereco) $("#fAddr").textContent = CONFIG.endereco;
 
 const carregarImg = (src, alt) => new Promise((ok) => {
-  const i = new Image(); i.alt = alt || ""; i.loading = "lazy";
+  const i = new Image(); i.alt = alt || ""; i.decoding = "async";
   i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src;
 });
 $$(".photo").forEach(async (fig) => {
@@ -131,9 +131,16 @@ $$(".photo").forEach(async (fig) => {
   // Sem foto da dupla: usa as fotos individuais lado a lado, se existirem
   if (fig.classList.contains("hero__photo")) {
     const [a, b] = await Promise.all([carregarImg("assets/img/roberta.jpg", "Dra. Roberta Moreira"), carregarImg("assets/img/sandra.jpg", "Dra. Sandra Quaresma")]);
-    if (a || b) {
+    if (a && b) {
       fig.classList.add("has-img", "is-duo");
-      [a, b].filter(Boolean).reverse().forEach((i) => fig.prepend(i));
+      [a, b].reverse().forEach((i) => fig.prepend(i));
+    } else if (a || b) {
+      // só uma foto disponível: ocupa o espaço todo e a legenda cita só essa advogada
+      const unica = a || b;
+      fig.classList.add("has-img");
+      fig.prepend(unica);
+      const cap = fig.querySelector("figcaption");
+      if (cap) cap.innerHTML = `<b>${unica.alt}</b><br>Advogada de Direito Imobiliário`;
     }
   }
 });

@@ -268,3 +268,6 @@ img{max-width:100%;display:block}
 .pillar__ico .tico{width:38px;height:38px;color:var(--copper-300)}
 .pillar__n{font-size:34px}
 @media (max-width:620px){.pillar__ico{width:52px;height:52px;border-radius:14px}.pillar__ico .tico{width:30px;height:30px}.pillar__head{gap:14px}.pillar__n{font-size:28px}}
+
+/* Enquadramento das fotos de retrato: mantém o rosto à vista no corte 4:5 */
+.person .photo img{object-position:center 12%}
