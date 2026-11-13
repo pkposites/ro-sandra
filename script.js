@@ -11,7 +11,7 @@ const CONFIG = {
   leadhubKey: "",
   leadhubSrc: "https://cadeolead.com.br/tracker.js",
 
-  gtmId: "",                     // ex.: GTM-XXXXXXX
+  gtmId: "GTM-NZN99WKX",         // snippet fixo no <head> e <noscript> no <body> do index.html
   metaPixelId: "",               // ex.: 1234567890
 
   // Opcional: webhook próprio (JSON via POST) além do Cadê o Lead.
@@ -90,7 +90,7 @@ function carregarLeadHub() {
 function carregarTracking() {
   if (!consentido() || window.__srTrack) return;
   window.__srTrack = true;
-  if (CONFIG.gtmId) {
+  if (CONFIG.gtmId && !document.querySelector('script[src*="googletagmanager.com/gtm.js"]')) {
     dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
     const s = document.createElement("script");
     s.async = true; s.src = `https://www.googletagmanager.com/gtm.js?id=${CONFIG.gtmId}`;
