@@ -256,3 +256,15 @@ img{max-width:100%;display:block}
   .topbar .btn--wa{display:none}
   .brand__txt{font-size:17px;line-height:1.15}
 }
+
+/* ===== Ícones por tema ===== */
+.tico{width:44px;height:44px;flex:none;color:var(--copper-600)}
+.tico--sm{width:22px;height:22px;margin-right:8px;vertical-align:-5px}
+.topics__g>span{display:flex;align-items:center}
+.situ__top{display:flex;align-items:center;justify-content:space-between}
+.situ__top .tico{width:48px;height:48px;padding:9px;border-radius:14px;background:#fbf1e8;color:var(--copper-700)}
+.pillar__head{align-items:center}
+.pillar__ico{display:grid;place-items:center;width:64px;height:64px;flex:none;border-radius:18px;border:1px solid rgba(227,180,145,.4);background:rgba(202,144,109,.1)}
+.pillar__ico .tico{width:38px;height:38px;color:var(--copper-300)}
+.pillar__n{font-size:34px}
+@media (max-width:620px){.pillar__ico{width:52px;height:52px;border-radius:14px}.pillar__ico .tico{width:30px;height:30px}.pillar__head{gap:14px}.pillar__n{font-size:28px}}
