@@ -3,7 +3,7 @@
    ========================================================================== */
 const CONFIG = {
   // WhatsApp com DDI + DDD, só números. Ex.: 5511999998888  (PENDENTE: definir canal)
-  whatsapp: "5511999999999",
+  whatsapp: "5511991114735",
   instagram: "",                 // ex.: https://www.instagram.com/perfil/
   endereco: "",                  // ex.: "Rua X, 123 · São Paulo/SP · Atendimento online e presencial"
 
