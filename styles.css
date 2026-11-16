@@ -271,3 +271,8 @@ img{max-width:100%;display:block}
 
 /* Enquadramento das fotos de retrato: mantém o rosto à vista no corte 4:5 */
 .person .photo img{object-position:center 12%}
+
+/* Topo com as duas fotos individuais lado a lado (até existir uma foto da dupla) */
+.hero__photo.is-duo{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:var(--navy-950)}
+.hero__photo.is-duo img{position:static;display:block;width:100%;height:100%;min-width:0;object-fit:cover;object-position:center 15%}
+.hero__photo.is-duo figcaption{position:absolute;left:0;right:0;bottom:0}
