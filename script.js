@@ -7,10 +7,6 @@ const CONFIG = {
   instagram: "",                 // ex.: https://www.instagram.com/perfil/
   endereco: "",                  // ex.: "Rua X, 123 · São Paulo/SP · Atendimento online e presencial"
 
-  // Cadê o Lead: chave pública (pk_...) da conta/cliente. Vazio = não carrega o tracker.
-  leadhubKey: "",
-  leadhubSrc: "https://cadeolead.com.br/tracker.js",
-
   gtmId: "GTM-NZN99WKX",         // snippet fixo no <head> e <noscript> no <body> do index.html
   metaPixelId: "",               // ex.: 1234567890
 
@@ -75,18 +71,9 @@ const TEMA = temaAtual();
 })();
 
 /* ---------- Consentimento (LGPD) ---------- */
-const consentido = () => { try { return localStorage.getItem("sr_consent") === "granted"; } catch (e) { return false; } };
-window.lhConsent = consentido();
+// O aviso de cookies é o do Cadê o Lead (data-consent="banner"); a escolha dele fica em lh_consent.
+const consentido = () => { try { return localStorage.getItem("lh_consent") === "granted" || localStorage.getItem("sr_consent") === "granted"; } catch (e) { return false; } };
 
-function carregarLeadHub() {
-  if (!CONFIG.leadhubKey || window.__lhLoaded) return;
-  window.__lhLoaded = true;
-  const s = document.createElement("script");
-  s.async = true; s.src = CONFIG.leadhubSrc;
-  s.dataset.key = CONFIG.leadhubKey;
-  s.dataset.consent = "required";
-  document.head.appendChild(s);
-}
 function carregarTracking() {
   if (!consentido() || window.__srTrack) return;
   window.__srTrack = true;
@@ -107,14 +94,10 @@ function aplicarConsent(v) {
   try { window.LeadHub && window.LeadHub.consent && window.LeadHub.consent(v); } catch (e) {}
   if (v) carregarTracking();
 }
-carregarLeadHub();
 carregarTracking();
+// Se a pessoa aceitar no aviso do Cadê o Lead, libera o restante (Pixel) sem precisar recarregar
+let _tent = 0; const _t = setInterval(() => { if (consentido()) { carregarTracking(); clearInterval(_t); } else if (++_tent > 400) clearInterval(_t); }, 1500);
 
-const consent = $("#consent");
-$("#consentYes").onclick = () => { aplicarConsent(true); consent.hidden = true; };
-$("#consentNo").onclick = () => { aplicarConsent(false); consent.hidden = true; };
-$("#openPrivacy").onclick = (e) => { e.preventDefault(); consent.hidden = false; };
-try { consent.hidden = !!localStorage.getItem("sr_consent"); } catch (e) { consent.hidden = false; }
 
 /* ---------- Rodapé / fotos ---------- */
 if (CONFIG.instagram) { const i = $("#fInsta"); i.href = CONFIG.instagram; i.hidden = false; i.target = "_blank"; i.rel = "noopener"; }
