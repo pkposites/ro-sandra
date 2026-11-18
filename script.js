@@ -21,28 +21,28 @@ const TEMAS = {
     eyebrow: "Atraso na entrega da obra",
     h1: "A construtora atrasou a obra? <em>Você tem direitos.</em>",
     lead: "Analisamos o seu contrato e as circunstâncias do atraso, da recusa na entrega das chaves ou dos vícios construtivos, e orientamos sobre as medidas cabíveis, inclusive a busca por indenização.",
-    cta: "Falar sobre o atraso da minha obra",
+    cta: "Fale com nossa equipe",
   },
   contratos: {
     servico: "Contrato de compra e venda / distrato",
     eyebrow: "Contratos imobiliários",
     h1: "Contrato imobiliário seguro, <em>antes e depois de assinar.</em>",
     lead: "Elaboramos, analisamos e revisamos contratos de compra e venda e de locação, e atuamos em distratos, rescisões e conflitos para prevenir prejuízos e proteger seus direitos.",
-    cta: "Falar sobre meu contrato",
+    cta: "Fale com nossa equipe",
   },
   inventario: {
     servico: "Inventário e partilha de imóveis",
     eyebrow: "Inventário e regularização",
     h1: "Imóvel no nome certo, <em>patrimônio protegido.</em>",
     lead: "Inventário parado, contrato de gaveta, usucapião ou documentação irregular. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade com segurança.",
-    cta: "Regularizar meu imóvel",
+    cta: "Fale com nossa equipe",
   },
   usucapiao: {
     servico: "Usucapião",
     eyebrow: "Usucapião",
     h1: "Mora há anos no imóvel sem escritura? <em>Veja a usucapião.</em>",
     lead: "A usucapião reconhece a propriedade de quem exerce a posse do imóvel há anos, quando os requisitos legais são atendidos. Analisamos o seu caso e orientamos sobre o procedimento adequado.",
-    cta: "Falar sobre usucapião",
+    cta: "Fale com nossa equipe",
   },
 };
 /* ========================================================================== */
