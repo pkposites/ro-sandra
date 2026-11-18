@@ -33,6 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/roberta-e-sandra-768.webp" imagesrcset="assets/img/roberta-e-sandra-768.webp 768w, assets/img/roberta-e-sandra-1536.webp 1536w" imagesizes="(max-width: 960px) calc(100vw - 40px), 472px" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.remove("no-js");</script>
 </head>
@@ -102,8 +103,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="situ__other situ__other--hero">Não encontrou a sua situação? Atuamos em outras questões do Direito Imobiliário. <button type="button" class="linkbtn" data-wa="indice" data-area="padrao">Conte seu caso →</button></p>
     </div>
 
-    <figure class="hero__photo photo" data-photo="assets/img/roberta-e-sandra.jpg" data-alt="Dra. Roberta Moreira e Dra. Sandra Quaresma" data-ratio="5/4">
-      <div class="photo__ph"><span>Foto da dupla</span><small>assets/img/roberta-e-sandra.jpg<br>horizontal, 5:4</small></div>
+    <figure class="hero__photo photo has-img" data-ratio="5/4" data-wa="foto" role="button" tabindex="0" aria-label="Falar com as advogadas no WhatsApp">
+      <picture>
+        <source type="image/webp" srcset="assets/img/roberta-e-sandra-768.webp 768w, assets/img/roberta-e-sandra-1536.webp 1536w" sizes="(max-width: 960px) calc(100vw - 40px), 472px">
+        <img src="assets/img/roberta-e-sandra.jpg" width="1536" height="1024" alt="Dra. Roberta Moreira e Dra. Sandra Quaresma" fetchpriority="high" decoding="async">
+      </picture>
+      <span class="photo__tap" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><use href="#i-wa"/></svg> Falar no WhatsApp</span>
       <figcaption><b>Dra. Roberta Moreira</b> e <b>Dra. Sandra Quaresma</b><br>Advogadas de Direito Imobiliário</figcaption>
     </figure>
   </div>
@@ -358,7 +363,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- WhatsApp flutuante -->
 <a class="fab" href="#" data-wa="flutuante" aria-label="Falar pelo WhatsApp">
-  <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg><span>Falar agora</span>
+  <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg><span>Falar no WhatsApp</span>
 </a>
 
 <!-- Formulário de contato (abre ao clicar em qualquer botão de WhatsApp) -->

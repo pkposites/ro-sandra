@@ -37,6 +37,13 @@ const TEMAS = {
     lead: "Inventário parado, contrato de gaveta, usucapião ou documentação irregular. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade com segurança.",
     cta: "Regularizar meu imóvel",
   },
+  usucapiao: {
+    servico: "Usucapião",
+    eyebrow: "Usucapião",
+    h1: "Mora há anos no imóvel sem escritura? <em>Veja a usucapião.</em>",
+    lead: "A usucapião reconhece a propriedade de quem exerce a posse do imóvel há anos, quando os requisitos legais são atendidos. Analisamos o seu caso e orientamos sobre o procedimento adequado.",
+    cta: "Falar sobre usucapião",
+  },
 };
 /* ========================================================================== */
 
@@ -46,7 +53,7 @@ const waUrl = (t) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent
 window.dataLayer = window.dataLayer || [];
 
 /* ---------- Tema da visita: ?tema=obra | /atraso-de-obra | #obra ---------- */
-const PATH_TEMA = { "atraso-de-obra": "obra", contratos: "contratos", inventario: "inventario" };
+const PATH_TEMA = { "atraso-de-obra": "obra", contratos: "contratos", inventario: "inventario", usucapiao: "usucapiao" };
 function temaAtual() {
   const q = new URLSearchParams(location.search).get("tema");
   if (TEMAS[q]) return q;
@@ -109,6 +116,7 @@ const carregarImg = (src, alt) => new Promise((ok) => {
 });
 $$(".photo").forEach(async (fig) => {
   fig.style.aspectRatio = fig.dataset.ratio || "4/5";
+  if (fig.querySelector("img")) return; // foto do topo já vem no HTML (WebP, com width/height e fetchpriority)
   const img = await carregarImg(fig.dataset.photo, fig.dataset.alt);
   if (img) { fig.classList.add("has-img"); fig.prepend(img); return; }
   // Sem foto da dupla: usa as fotos individuais lado a lado, se existirem
@@ -158,6 +166,10 @@ modal.addEventListener("click", (e) => { if (e.target === modal) fechar(); });
 $$("[data-wa]").forEach((el) => {
   if (el.tagName === "A") el.setAttribute("href", "#contato-whatsapp");
   el.addEventListener("click", (e) => { e.preventDefault(); abrirForm(el.dataset.wa, el.dataset.area); });
+  // elementos que não são link/botão (ex.: a foto do topo) também respondem ao teclado
+  if (el.tagName !== "A" && el.tagName !== "BUTTON") {
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrirForm(el.dataset.wa, el.dataset.area); } });
+  }
 });
 
 form.addEventListener("submit", (e) => {
@@ -203,6 +215,18 @@ $$(".topics a").forEach((a) => a.addEventListener("click", (e) => {
   $$(".ticks li.is-hl").forEach((x) => x.classList.remove("is-hl"));
   if (item) { item.classList.add("is-hl"); setTimeout(() => item.classList.remove("is-hl"), 6000); }
 }));
+
+/* ---------- Barra de cookies do Cadê o Lead: mede a altura para o botão fixo de WhatsApp ficar acima dela ---------- */
+(function medirBarraDeCookies() {
+  const raiz = document.documentElement;
+  const atualizar = () => {
+    const b = document.querySelector("[data-leadhub-consent]");
+    raiz.style.setProperty("--cookie-h", b ? Math.ceil(b.getBoundingClientRect().height) + "px" : "0px");
+  };
+  new MutationObserver(atualizar).observe(document.body, { childList: true });
+  addEventListener("resize", atualizar);
+  atualizar();
+})();
 
 /* ---------- Barra superior ao rolar ---------- */
 const topbar = $(".topbar");
