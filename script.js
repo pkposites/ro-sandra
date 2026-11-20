@@ -42,14 +42,14 @@ const TEMAS = {
     eyebrow: "Usucapião",
     h1: "Mora há anos no imóvel sem escritura? <em>Veja a usucapião.</em>",
     lead: "A usucapião reconhece a propriedade de quem exerce a posse do imóvel há anos, quando os requisitos legais são atendidos. Analisamos o seu caso e orientamos sobre o procedimento adequado.",
-    cta: "Falar com advogada no WhatsApp",
+    cta: "Fale com nossa equipe",
   },
   gaveta: {
     servico: "Regularização de imóvel",
     eyebrow: "Contrato de gaveta",
     h1: "Comprou o imóvel por contrato de gaveta? <em>Regularize no seu nome.</em>",
     lead: "“Quem não registra não é dono.” A falta de registro dificulta vender, financiar e transferir o imóvel. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade.",
-    cta: "Falar com advogada no WhatsApp",
+    cta: "Fale com nossa equipe",
   },
 };
 /* ========================================================================== */
