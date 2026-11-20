@@ -34,7 +34,7 @@ const TEMAS = {
     servico: "Inventário e partilha de imóveis",
     eyebrow: "Inventário e regularização",
     h1: "Inventário parado ou imóvel que não está no seu nome? <em>Regularize com segurança.</em>",
-    lead: "Inventário parado, contrato de gaveta, usucapião ou documentação irregular. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade com segurança.",
+    lead: "Inventário parado, contrato de gaveta, usucapião ou documentação irregular. Analisamos o seu caso e indicamos como regularizar a propriedade com segurança.",
     cta: "Fale com nossa equipe",
   },
   usucapiao: {
@@ -70,9 +70,10 @@ function temaAtual() {
   const h = location.hash.replace("#", "");
   return TEMAS[h] ? h : "";
 }
-const TEMA = temaAtual();
+const TEMA = document.body.dataset.tema || temaAtual();
 (function aplicarTema() {
-  if (!TEMA) return;
+  // as páginas de tema (/usucapiao etc.) já vêm com o texto no HTML (tools/build.js): não reescrever, evita deslocamento de layout
+  if (!TEMA || document.body.hasAttribute("data-static")) return;
   const t = TEMAS[TEMA];
   $(".hero .eyebrow").textContent = t.eyebrow;
   $(".hero h1").innerHTML = t.h1;
@@ -129,7 +130,7 @@ $$(".photo").forEach(async (fig) => {
   if (img) { fig.classList.add("has-img"); fig.prepend(img); return; }
   // Sem foto da dupla: usa as fotos individuais lado a lado, se existirem
   if (fig.classList.contains("hero__photo")) {
-    const [a, b] = await Promise.all([carregarImg("assets/img/roberta.jpg", "Dra. Roberta Moreira"), carregarImg("assets/img/sandra.jpg", "Dra. Sandra Quaresma")]);
+    const [a, b] = await Promise.all([carregarImg("/assets/img/roberta.jpg", "Dra. Roberta Moreira"), carregarImg("/assets/img/sandra.jpg", "Dra. Sandra Quaresma")]);
     if (a && b) {
       fig.classList.add("has-img", "is-duo");
       [a, b].reverse().forEach((i) => fig.prepend(i));
@@ -230,14 +231,19 @@ $$(".topics a").forEach((a) => a.addEventListener("click", (e) => {
 /* ---------- Barra de cookies do Cadê o Lead: mede a altura para o botão fixo de WhatsApp ficar acima dela ---------- */
 (function medirBarraDeCookies() {
   const raiz = document.documentElement;
+  let visto = false, esgotou = false;
   const atualizar = () => {
     const b = document.querySelector("[data-leadhub-consent]");
+    // enquanto a barra ainda vai chegar (classe "pede-cookies"), mantém o espaço reservado pelo CSS: o botão fixo não pula
+    if (!b && raiz.classList.contains("pede-cookies") && !visto && !esgotou) return;
+    if (b) visto = true; else raiz.classList.remove("pede-cookies");
     raiz.style.setProperty("--cookie-h", b ? Math.ceil(b.getBoundingClientRect().height) + "px" : "0px");
     // área segura do iPhone: o botão fixo só a soma quando é o último elemento do rodapé (a barra de cookies já a inclui)
     raiz.style.setProperty("--fab-safe", b ? "0px" : "env(safe-area-inset-bottom, 0px)");
   };
   new MutationObserver(atualizar).observe(document.body, { childList: true });
   addEventListener("resize", atualizar);
+  setTimeout(() => { esgotou = true; atualizar(); }, 8000); // se a barra nunca vier (ex.: bloqueador), libera o espaço
   atualizar();
 })();
 

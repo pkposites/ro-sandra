@@ -1,0 +1,13 @@
+/* Fontes reserva com a largura ajustada à Cormorant Garamond e ao Manrope. Os size-adjust foram obtidos medindo, no navegador,
+   a altura real do título e do parágrafo do topo nas 6 páginas e em larguras de 340 a 440 px (com Gelasio=Georgia, Noto Serif,
+   Liberation=Times/Arial e Roboto), escolhendo o valor com menos trocas de linha quando a fonte final chega (evita CLS). */
+@font-face{font-family:"CG Georgia";font-style:normal;font-weight:500 700;src:local("Georgia Bold"),local("Georgia-Bold");size-adjust:79.5%}
+@font-face{font-family:"CG Georgia";font-style:italic;font-weight:500 700;src:local("Georgia Bold Italic"),local("Georgia-BoldItalic");size-adjust:71.2%}
+@font-face{font-family:"CG Noto";font-style:normal;font-weight:500 700;src:local("Noto Serif Bold"),local("NotoSerif-Bold");size-adjust:79.0%}
+@font-face{font-family:"CG Noto";font-style:italic;font-weight:500 700;src:local("Noto Serif Bold Italic"),local("NotoSerif-BoldItalic");size-adjust:71.1%}
+@font-face{font-family:"CG Times";font-style:normal;font-weight:500 700;src:local("Times New Roman Bold"),local("TimesNewRomanPS-BoldMT"),local("Liberation Serif Bold"),local("LiberationSerif-Bold");size-adjust:91.5%}
+@font-face{font-family:"CG Times";font-style:italic;font-weight:500 700;src:local("Times New Roman Bold Italic"),local("TimesNewRomanPS-BoldItalicMT"),local("Liberation Serif Bold Italic"),local("LiberationSerif-BoldItalic");size-adjust:86.1%}
+@font-face{font-family:"MR Arial";font-style:normal;font-weight:400 500;src:local("Arial"),local("ArialMT"),local("Helvetica"),local("Liberation Sans"),local("LiberationSans"),local("Arimo");size-adjust:103.25%}
+@font-face{font-family:"MR Arial";font-style:normal;font-weight:600 700;src:local("Arial Bold"),local("Arial-BoldMT"),local("Helvetica Bold"),local("Helvetica-Bold"),local("Liberation Sans Bold"),local("LiberationSans-Bold"),local("Arimo Bold");size-adjust:100.7%}
+@font-face{font-family:"MR Roboto";font-style:normal;font-weight:400 500;src:local("Roboto"),local("Roboto-Regular");size-adjust:102.5%}
+@font-face{font-family:"MR Roboto";font-style:normal;font-weight:600 700;src:local("Roboto Bold"),local("Roboto-Bold");size-adjust:106.6%}

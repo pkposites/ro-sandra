@@ -19,3 +19,14 @@ Teste local: `python3 -m http.server 8000`
 
 ## Textos por tema (aguardando aprovação das advogadas)
 Os títulos e parágrafos de `/atraso-de-obra`, `/contratos` e `/inventario` ficam em `TEMAS` no `script.js`. A página principal usa só o texto já aprovado.
+
+## Como editar (build)
+O HTML que vai ao ar é **gerado**. Edite só estes arquivos e rode `node tools/build.js`:
+- `src/index.template.html`: modelo do HTML (não edite `index.html` nem `tema-*.html`, são gerados)
+- `styles.css`: CSS completo (o build gera `assets/styles.min.css` e o CSS crítico embutido no HTML)
+- `script.js`: JS e `TEMAS` (texto do topo de cada página de tema; o build lê daqui)
+- `tools/fallbacks.css`: fontes reserva com `size-adjust` calibrado (evita deslocamento de layout na troca de fonte)
+
+Rotas de tema (`_redirects`): `/atraso-de-obra`, `/contratos`, `/inventario`, `/usucapiao`, `/contrato-de-gaveta` (e `/gaveta` redireciona).
+Teste local com as mesmas regras: `node tools/serve.js` (porta 8765).
+Fontes próprias em `assets/fonts` (subconjunto latino, com preload). GTM, Clarity e Cadê o Lead ficam no modelo, sem alteração.

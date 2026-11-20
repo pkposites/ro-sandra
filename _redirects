@@ -1,8 +1,8 @@
-# Links por tema (úteis para anúncios): mesma página, abre já no assunto
-/atraso-de-obra   /index.html?tema=obra         200
-/contratos        /index.html?tema=contratos    200
-/inventario       /index.html?tema=inventario   200
-/usucapiao        /index.html?tema=usucapiao    200
-/contrato-de-gaveta  /index.html?tema=gaveta   200
+# Páginas de tema (geradas por tools/build.js). O endereço do navegador continua o curto.
+/atraso-de-obra      /tema-obra.html         200
+/contratos           /tema-contratos.html    200
+/inventario          /tema-inventario.html   200
+/usucapiao           /tema-usucapiao.html    200
+/contrato-de-gaveta  /tema-gaveta.html       200
 # /gaveta (usado em anúncios) -> URL final
-/gaveta           /contrato-de-gaveta           301
+/gaveta              /contrato-de-gaveta     301
