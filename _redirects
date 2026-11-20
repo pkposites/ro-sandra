@@ -3,3 +3,6 @@
 /contratos        /index.html?tema=contratos    200
 /inventario       /index.html?tema=inventario   200
 /usucapiao        /index.html?tema=usucapiao    200
+/contrato-de-gaveta  /index.html?tema=gaveta   200
+# /gaveta (usado em anúncios) -> URL final
+/gaveta           /contrato-de-gaveta           301

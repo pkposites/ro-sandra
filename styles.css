@@ -318,3 +318,10 @@ img{max-width:100%;display:block}
   [data-leadhub-consent] div{flex-direction:column!important;gap:5px!important}
   [data-leadhub-consent] button{min-height:30px!important;padding:0 10px!important;font-size:12px!important}
 }
+
+/* Área segura do iPhone (barra home) no botão fixo, na barra de cookies e no fim da página */
+@media (max-width:620px){
+  .fab{padding-bottom:calc(12px + var(--fab-safe,0px));min-height:calc(56px + var(--fab-safe,0px))}
+  [data-leadhub-consent]{padding-bottom:calc(7px + env(safe-area-inset-bottom,0px))!important}
+  .footer__legal{padding-bottom:calc(84px + var(--cookie-h,0px) + env(safe-area-inset-bottom,0px))}
+}

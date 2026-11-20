@@ -26,14 +26,14 @@ const TEMAS = {
   contratos: {
     servico: "Contrato de compra e venda / distrato",
     eyebrow: "Contratos imobiliários",
-    h1: "Contrato imobiliário seguro, <em>antes e depois de assinar.</em>",
+    h1: "Vai assinar ou precisa desfazer um contrato de imóvel? <em>Fale antes de decidir.</em>",
     lead: "Elaboramos, analisamos e revisamos contratos de compra e venda e de locação, e atuamos em distratos, rescisões e conflitos para prevenir prejuízos e proteger seus direitos.",
     cta: "Fale com nossa equipe",
   },
   inventario: {
     servico: "Inventário e partilha de imóveis",
     eyebrow: "Inventário e regularização",
-    h1: "Imóvel no nome certo, <em>patrimônio protegido.</em>",
+    h1: "Inventário parado ou imóvel que não está no seu nome? <em>Regularize com segurança.</em>",
     lead: "Inventário parado, contrato de gaveta, usucapião ou documentação irregular. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade com segurança.",
     cta: "Fale com nossa equipe",
   },
@@ -42,7 +42,14 @@ const TEMAS = {
     eyebrow: "Usucapião",
     h1: "Mora há anos no imóvel sem escritura? <em>Veja a usucapião.</em>",
     lead: "A usucapião reconhece a propriedade de quem exerce a posse do imóvel há anos, quando os requisitos legais são atendidos. Analisamos o seu caso e orientamos sobre o procedimento adequado.",
-    cta: "Fale com nossa equipe",
+    cta: "Falar com advogada no WhatsApp",
+  },
+  gaveta: {
+    servico: "Regularização de imóvel",
+    eyebrow: "Contrato de gaveta",
+    h1: "Comprou o imóvel por contrato de gaveta? <em>Regularize no seu nome.</em>",
+    lead: "“Quem não registra não é dono.” A falta de registro dificulta vender, financiar e transferir o imóvel. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade.",
+    cta: "Falar com advogada no WhatsApp",
   },
 };
 /* ========================================================================== */
@@ -53,7 +60,8 @@ const waUrl = (t) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent
 window.dataLayer = window.dataLayer || [];
 
 /* ---------- Tema da visita: ?tema=obra | /atraso-de-obra | #obra ---------- */
-const PATH_TEMA = { "atraso-de-obra": "obra", contratos: "contratos", inventario: "inventario", usucapiao: "usucapiao" };
+const PATH_TEMA = { "atraso-de-obra": "obra", contratos: "contratos", inventario: "inventario", usucapiao: "usucapiao", "contrato-de-gaveta": "gaveta" };
+const PAGINA = location.pathname.replace(/\/index\.html$/, "/") || "/"; // identifica a página nos eventos do funil (ex.: "/usucapiao")
 function temaAtual() {
   const q = new URLSearchParams(location.search).get("tema");
   if (TEMAS[q]) return q;
@@ -156,6 +164,7 @@ function abrirForm(local, area) {
   $("#leadConsentBox").hidden = consentido();
   err.hidden = true;
   dataLayer.push({ event: "whatsapp_open_form", local, area: ctx.area || "geral" });
+  dataLayer.push({ event: "modal_open", pagina: PAGINA });
   modal.showModal ? modal.showModal() : modal.setAttribute("open", "");
   setTimeout(() => form.nome.focus(), 50);
 }
@@ -199,6 +208,8 @@ form.addEventListener("submit", (e) => {
   if (CONFIG.leadEndpoint) {
     try { fetch(CONFIG.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome, telefone: tel, servico, local: ctx.local, pagina: location.href }), keepalive: true }); } catch (x) {}
   }
+  // clique que abre o wa.me: origem "flutuante" se o formulário foi aberto pelo botão fixo; senão "modal"
+  dataLayer.push({ event: "whatsapp_click", pagina: PAGINA, origem: ctx.local === "flutuante" ? "flutuante" : "modal" });
   window.open(destino, "_blank", "noopener");
   fechar();
 });
@@ -222,6 +233,8 @@ $$(".topics a").forEach((a) => a.addEventListener("click", (e) => {
   const atualizar = () => {
     const b = document.querySelector("[data-leadhub-consent]");
     raiz.style.setProperty("--cookie-h", b ? Math.ceil(b.getBoundingClientRect().height) + "px" : "0px");
+    // área segura do iPhone: o botão fixo só a soma quando é o último elemento do rodapé (a barra de cookies já a inclui)
+    raiz.style.setProperty("--fab-safe", b ? "0px" : "env(safe-area-inset-bottom, 0px)");
   };
   new MutationObserver(atualizar).observe(document.body, { childList: true });
   addEventListener("resize", atualizar);
