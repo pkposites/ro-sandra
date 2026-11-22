@@ -1,7 +1,7 @@
 # /usucapiao (piloto, Fase 2): textos para aprovação das advogadas
 
 Nada disto vai para produção sem o OK da Dra. Roberta e da Dra. Sandra. A página está só no preview.
-No HTML, cada seção tem `data-aprovar` e um comentário "PARA APROVAÇÃO DAS ADVOGADAS"; os trechos pendentes aparecem destacados em amarelo (`.aprovar`).
+No HTML, cada seção tem `data-aprovar` e um comentário "PARA APROVAÇÃO DAS ADVOGADAS"; **todo o texto novo da página aparece destacado em amarelo (`.aprovar`)**: títulos, rótulos, parágrafos, respostas do FAQ, rótulos dos botões (cabeçalho, hero, foto, seções, CTA final), nomes da faixa "Também atuamos em" e o `#fAddr` do rodapé. O destaque some quando o texto for aprovado e a classe for retirada. Sem destaque ficam só os elementos que já existiam em todas as páginas (botão fixo "Fale com nossa equipe", links do rodapé, aviso legal, nomes e OAB/ano nos dados fixos).
 
 ## Pendências que bloqueiam a publicação
 1. **Bio curta da Dra. Roberta e da Dra. Sandra**: hoje aparece `[A CONFIRMAR COM AS ADVOGADAS]`. Não foi inventado nada. Não repetir "maiores construtoras do Brasil" sem comprovação.
@@ -17,3 +17,6 @@ Hero (eyebrow, H1, lead, botão, microcopy), Situações (título, lead, 4 situa
 
 ## Conferência de conteúdo (Provimento OAB 205/2021)
 Sem promessa de resultado, sem valores, descontos ou prazos, sem "a gente resolve", "garantimos", "regularize agora" nem "cada dia de espera pode custar caro", sem comparação e sem autoengrandecimento. O CTA final traz "isso não é promessa de resultado" e o rodapé mantém o aviso de que o site é informativo.
+
+## Destaque amarelo (`.aprovar`)
+Aplicado em todo o texto novo acima, inclusive: botão do cabeçalho ("Fale conosco"), botão sobre a foto ("Falar com as advogadas"), rótulos acima dos títulos ("Usucapião", "Situações comuns", "Como funciona", "Quem vai atender você", "Dúvidas frequentes"), rótulo "Também atuamos em" e os 4 nomes de link, linha de OAB/ano de cada advogada, e o texto do endereço no rodapé (`#fAddr`, só nesta página). O rodapé das demais páginas não muda.

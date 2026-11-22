@@ -150,7 +150,12 @@ function montarLP(tema) {
   const subModal = (a, b) => { if (!modal.includes(a)) throw new Error("trecho do modal não encontrado: " + a.slice(0, 40)); modal = modal.replace(a, b); };
   subModal("Antes de abrir a conversa", "Para as advogadas falarem com você.");
   subModal("Preencha para as advogadas já saberem quem é você e o que precisa.", "Informe nome, telefone e o assunto. Em seguida, abrimos a conversa no WhatsApp.");
-  const mapa = { preloads, styles: stylesLP, trackers: COMPARTILHADO.trackers, "gtm-noscript": COMPARTILHADO["gtm-noscript"], sprite: COMPARTILHADO.sprite, footer: COMPARTILHADO.footer, fab: COMPARTILHADO.fab, modal,
+  // endereço do rodapé: texto "a confirmar" destacado como pendente de aprovação (só nesta LP)
+  let footer = COMPARTILHADO.footer;
+  const fa = '<p class="muted" id="fAddr">Endereço e modalidade de atendimento a confirmar.</p>';
+  if (!footer.includes(fa)) throw new Error("#fAddr não encontrado no rodapé");
+  footer = footer.replace(fa, '<p class="muted" id="fAddr"><span class="aprovar">Endereço e modalidade de atendimento a confirmar.</span></p>');
+  const mapa = { preloads, styles: stylesLP, trackers: COMPARTILHADO.trackers, "gtm-noscript": COMPARTILHADO["gtm-noscript"], sprite: COMPARTILHADO.sprite, footer, fab: COMPARTILHADO.fab, modal,
     script: '<script src="/script.js" defer></script>', body: `<body data-tema="${tema}" data-static>` };
   for (const [k, v] of Object.entries(mapa)) {
     const marca = `<!--BUILD:${k}-->`;
