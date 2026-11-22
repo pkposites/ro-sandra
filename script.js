@@ -169,7 +169,18 @@ function abrirForm(local, area) {
   modal.showModal ? modal.showModal() : modal.setAttribute("open", "");
   setTimeout(() => form.nome.focus(), 50);
 }
-const fechar = () => (modal.close ? modal.close() : modal.removeAttribute("open"));
+/* Estado do botão depois de validar: "Abrindo o WhatsApp…" (TEXTO NOVO, aguarda aprovação das advogadas) */
+const btnGo = $(".lead__go", form), fallback = $("#leadFallback"), fallbackLink = $("#leadFallbackLink");
+const rotuloGo = btnGo.lastChild.textContent;
+let enviando = false, fimTimer = null;
+function resetarModal() {
+  clearTimeout(fimTimer); enviando = false;
+  btnGo.disabled = false; btnGo.removeAttribute("aria-busy"); form.removeAttribute("aria-busy");
+  btnGo.lastChild.textContent = rotuloGo;
+  fallback.hidden = true;
+}
+const fechar = () => { modal.close ? modal.close() : modal.removeAttribute("open"); resetarModal(); };
+modal.addEventListener("close", resetarModal);
 $("#leadClose").onclick = fechar;
 modal.addEventListener("click", (e) => { if (e.target === modal) fechar(); });
 
@@ -184,6 +195,7 @@ $$("[data-wa]").forEach((el) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  if (enviando) return; // evita enviar duas vezes (e disparar dois generate_lead) enquanto o WhatsApp abre
   const nome = form.nome.value.trim(), tel = form.telefone.value.replace(/\D/g, ""), servico = form.servico.value;
   const falha = nome.split(/\s+/).filter(Boolean).length < 1 || nome.length < 2 ? "Informe seu nome."
     : tel.length < 10 ? "Informe um telefone com DDD."
@@ -192,6 +204,9 @@ form.addEventListener("submit", (e) => {
     : "";
   if (falha) { err.textContent = falha; err.hidden = false; return; }
   if (!consentido()) aplicarConsent(true);
+  enviando = true;
+  btnGo.disabled = true; btnGo.setAttribute("aria-busy", "true"); form.setAttribute("aria-busy", "true");
+  btnGo.lastChild.textContent = " Abrindo o WhatsApp…";
 
   const texto = [`Olá! Sou ${nome}.`, `Preciso de ajuda com: ${servico}.`, "Vim pela página e gostaria de falar com as advogadas."].join("\n");
   const url = waUrl(texto);
@@ -211,9 +226,30 @@ form.addEventListener("submit", (e) => {
   }
   // clique que abre o wa.me: origem "flutuante" se o formulário foi aberto pelo botão fixo; senão "modal"
   dataLayer.push({ event: "whatsapp_click", pagina: PAGINA, origem: ctx.local === "flutuante" ? "flutuante" : "modal" });
-  window.open(destino, "_blank", "noopener");
-  fechar();
+  // sem "noopener" na lista de recursos o window.open devolve a janela (com noopener devolveria sempre null e não dá para saber se foi bloqueado)
+  let aba = null;
+  try { aba = window.open(destino, "_blank"); if (aba) aba.opener = null; } catch (x) {}
+  if (!aba || aba.closed) {
+    // bloqueado: mostra o link com a mesma URL já montada (inclui o código do Cadê o Lead) e mantém o modal aberto
+    fallbackLink.href = destino; fallback.hidden = false;
+    return;
+  }
+  fimTimer = setTimeout(fechar, 1200); // não fecha na hora: mostra "Abrindo o WhatsApp…" enquanto a conversa abre
 });
+
+/* ---------- Só na página inicial: o cartão inteiro rola até o bloco (#obra, #contratos, #inventario) ---------- */
+// Sem <a> dentro de <a>: o clique no cartão usa o href do "Saiba mais" que já existe dentro dele
+if (!TEMA) {
+  $$(".situ__card").forEach((card) => {
+    const link = $("a.more", card);
+    if (!link) return;
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("a, button")) return; // o próprio link/botão já tem o seu comportamento
+      const alvo = $(link.getAttribute("href"));
+      if (alvo) alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
 
 /* ---------- Medição: qual assunto a pessoa clicou ---------- */
 // Cada botão rola (suave, descontando o header fixo via scroll-padding-top) até o TÍTULO do bloco do tema

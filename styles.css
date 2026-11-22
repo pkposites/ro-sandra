@@ -356,3 +356,13 @@ html:not(.pede-cookies){--fab-safe:env(safe-area-inset-bottom,0px)}
 
 /* Título da página inicial no celular: quebra de linha equilibrada e estável (não muda de linhas quando a fonte final chega) */
 @media (max-width:620px){body:not([data-tema]) .hero h1{text-wrap:balance;max-width:21ch}}
+
+/* ===== Fase 1 ===== */
+/* âncoras e foco não ficam atrás do botão fixo nem da barra de cookies (só lê --cookie-h; o JS e o CSS do .fab não mudam) */
+html{scroll-padding-bottom:calc(74px + var(--cookie-h,0px) + env(safe-area-inset-bottom,0px))}
+/* página inicial: o cartão inteiro é clicável (JS leva ao bloco) */
+body:not([data-tema]) .situ__card{cursor:pointer}
+/* modal: estado "Abrindo o WhatsApp…" e link de reserva */
+.lead__go[disabled]{opacity:.8;cursor:progress}
+.lead__fallback{margin:12px 0 0;text-align:center;font-size:14.5px}
+.lead__fallback a{color:var(--copper-700);font-weight:700;text-decoration:underline;text-underline-offset:3px}

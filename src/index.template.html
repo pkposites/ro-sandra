@@ -97,7 +97,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="#inventario" data-item="usucapiao">Usucapião</a></li>
         </ul></div>
       </nav>
-      <p class="situ__other situ__other--hero">Não encontrou a sua situação? Atuamos em outras questões do Direito Imobiliário. <button type="button" class="linkbtn" data-wa="indice" data-area="padrao">Conte seu caso →</button></p>
+      <p class="situ__other situ__other--hero">Não encontrou a sua situação? Atuamos em outras questões do Direito Imobiliário. <button type="button" class="linkbtn" data-wa="indice">Conte seu caso →</button></p>
     </div>
 
     <figure class="hero__photo photo has-img" data-ratio="5/4" data-wa="foto" role="button" tabindex="0" aria-label="Fale com nossa equipe pelo WhatsApp">
@@ -361,6 +361,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Formulário de contato (abre ao clicar em qualquer botão de WhatsApp) -->
 <dialog class="leadmodal" id="leadModal" aria-labelledby="leadTitle">
+  <div id="contato-whatsapp">
   <form method="dialog" id="leadForm" novalidate>
     <button type="button" class="lead__x" id="leadClose" aria-label="Fechar">×</button>
     <p class="eyebrow">Atendimento pelo WhatsApp</p>
@@ -382,7 +383,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <label class="check" id="leadConsentBox"><input type="checkbox" name="aceite"><span>Concordo em compartilhar meus dados para ser atendido(a) e com o uso de cookies para medir os anúncios.</span></label>
     <p class="lead__err" id="leadErr" role="alert" hidden></p>
     <button type="submit" class="btn btn--wa btn--lg lead__go"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg> Continuar no WhatsApp</button>
+    <!-- TEXTO NOVO PARA APROVAÇÃO DAS ADVOGADAS: "Abrindo o WhatsApp…" (no botão, via script.js) e "Se o WhatsApp não abriu, toque aqui" -->
+    <p class="lead__fallback" id="leadFallback" role="status" aria-live="polite" hidden><a id="leadFallbackLink" href="#" target="_blank" rel="noopener">Se o WhatsApp não abriu, toque aqui</a></p>
   </form>
+  </div>
 </dialog>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
