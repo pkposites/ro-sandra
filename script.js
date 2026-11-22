@@ -213,6 +213,13 @@ $$("[data-wa]").forEach((el) => {
   }
 });
 
+/* ---------- Abre o modal quando a URL chega em #contato-whatsapp ou #leadModal (ex.: CTA aberto em nova aba) ---------- */
+// O id está dentro do <dialog> fechado, então o navegador não mostra nada sozinho: abrimos o modal no carregamento e a cada hashchange.
+const HASHES_MODAL = ["#contato-whatsapp", "#leadModal"];
+function abrirPeloHash() { if (HASHES_MODAL.includes(location.hash) && !modal.open) abrirForm("hash"); }
+abrirPeloHash();
+addEventListener("hashchange", abrirPeloHash);
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (enviando) return; // evita enviar duas vezes (e disparar dois generate_lead) enquanto o WhatsApp abre
