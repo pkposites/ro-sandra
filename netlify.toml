@@ -1,0 +1,4 @@
+# Netlify Functions (API de Conversões do Meta): netlify/functions/meta-capi.mts -> /.netlify/functions/meta-capi
+# Variáveis de ambiente (painel da Netlify, escopo Functions): META_CAPI_TOKEN (secreta), META_PIXEL_ID, META_API_VERSION, META_ALLOWED_ORIGINS
+[functions]
+  directory = "netlify/functions"

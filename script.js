@@ -8,7 +8,7 @@ const CONFIG = {
   endereco: "",                  // ex.: "Rua X, 123 · São Paulo/SP · Atendimento online e presencial"
 
   gtmId: "GTM-NZN99WKX",         // snippet fixo no <head> e <noscript> no <body> do index.html
-  metaPixelId: "",               // ex.: 1234567890
+  metaPixelId: "",               // NÃO preencher: o Pixel (1470345208372047) é carregado pelo GTM; preencher aqui duplicaria PageView/Lead
 
   // Opcional: webhook próprio (JSON via POST) além do Cadê o Lead.
   leadEndpoint: "",
@@ -58,6 +58,26 @@ const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const waUrl = (t) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
 window.dataLayer = window.dataLayer || [];
+
+/* ---------- Meta: event_id (deduplicação navegador x servidor) e API de Conversões ---------- */
+const META_CAPI_URL = "/.netlify/functions/meta-capi";
+const novoEventId = (p) => `${p}_${window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2, 12)}`;
+const lerCookie = (n) => { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; };
+// ?meta_test=TEST12345 (código do "Testar eventos"): vale só na sessão e só para teste; sem o parâmetro, nada muda
+function metaTesteCodigo() {
+  try {
+    const q = new URLSearchParams(location.search).get("meta_test");
+    if (q && /^TEST\d{3,10}$/.test(q)) sessionStorage.setItem("meta_test", q);
+    return sessionStorage.getItem("meta_test") || "";
+  } catch (e) { return ""; }
+}
+function enviarCapi(payload) { // não bloqueia: beacon/keepalive, o redirecionamento ao WhatsApp segue normal
+  try {
+    const corpo = JSON.stringify(payload);
+    if (navigator.sendBeacon && navigator.sendBeacon(META_CAPI_URL, new Blob([corpo], { type: "text/plain" }))) return;
+    fetch(META_CAPI_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: corpo, keepalive: true }).catch(() => {});
+  } catch (e) {}
+}
 
 /* ---------- Tema da visita: ?tema=obra | /atraso-de-obra | #obra ---------- */
 const PATH_TEMA = { "atraso-de-obra": "obra", contratos: "contratos", inventario: "inventario", usucapiao: "usucapiao", "contrato-de-gaveta": "gaveta" };
@@ -219,8 +239,10 @@ form.addEventListener("submit", (e) => {
     }
   } catch (x) { console.warn("Cadê o Lead indisponível", x); }
 
-  dataLayer.push({ event: "generate_lead", servico, local: ctx.local, area: ctx.area || "geral" });
-  if (window.fbq) fbq("track", "Lead", { content_name: servico });
+  // o Lead do Pixel sai pelo GTM (tag "Meta Pixel - Lead", lê event_id do dataLayer); o do servidor sai daqui, com o MESMO event_id
+  const leadEventId = novoEventId("lead");
+  dataLayer.push({ event: "generate_lead", servico, local: ctx.local, area: ctx.area || "geral", pagina: PAGINA, event_id: leadEventId });
+  enviarCapi({ event_name: "Lead", event_id: leadEventId, event_source_url: location.href, fbp: lerCookie("_fbp"), fbc: lerCookie("_fbc"), fbclid: new URLSearchParams(location.search).get("fbclid") || "", nome, telefone: tel, servico, area: ctx.area || "geral", test_event_code: metaTesteCodigo() });
   if (CONFIG.leadEndpoint) {
     try { fetch(CONFIG.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome, telefone: tel, servico, local: ctx.local, pagina: location.href }), keepalive: true }); } catch (x) {}
   }

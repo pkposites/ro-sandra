@@ -6,3 +6,6 @@
 /contrato-de-gaveta  /tema-gaveta.html       200
 # /gaveta (usado em anúncios) -> URL final
 /gaveta              /contrato-de-gaveta     301
+
+# Atenção: /.netlify/functions/* (API de Conversões) NÃO pode ser reescrito. Não adicionar regra "/*" acima das funções;
+# as regras acima são todas de caminho exato, então nenhuma captura /.netlify/functions/meta-capi.
