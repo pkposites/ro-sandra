@@ -80,3 +80,8 @@ body[data-tema="usucapiao"] .hero .lead{max-width:600px}
   body[data-tema="usucapiao"] .hero__photo{margin-top:8px}
   body[data-tema="usucapiao"] .hero__photo figcaption{padding-top:18px}
 }
+
+/* o destaque .aprovar é só um marca-texto inline: no styles.css a regra ".steps__list span" (círculo do número) pegaria
+   também os spans do destaque dentro dos passos; aqui o destaque volta a ser inline e herda a tipografia do texto */
+.aprovar{display:inline;position:static;float:none;width:auto;height:auto;margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit}
+.steps__list .aprovar{display:inline;place-items:normal;width:auto;height:auto;margin:0;border-radius:4px;background:#fff3b0;color:#4a3b00;font:inherit}
