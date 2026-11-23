@@ -1,3 +1,6 @@
+> **Atualização (23/11):** o Rob aprovou a publicação. Na versão de produção não há destaque amarelo nem placeholders: as bios curtas, o endereço (FAQ e rodapé `#fAddr`, mantido oculto e vazio) e a citação da Dra. Sandra ficaram de fora até as advogadas aprovarem. O texto abaixo descreve a versão de revisão (preview).
+> A produção usa a base já no ar (1bab34d + API de Conversões); a /usucapiao nova é gerada por `tools/build.js` sobre essa base, sem as mudanças da Fase 1 em `script.js`/`styles.css`/home.
+
 # /usucapiao (piloto, Fase 2): textos para aprovação das advogadas
 
 Nada disto vai para produção sem o OK da Dra. Roberta e da Dra. Sandra. A página está só no preview.
