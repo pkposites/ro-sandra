@@ -13,20 +13,39 @@
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/cormorant-garamond-italic.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/manrope.woff2" crossorigin>
   <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NZN99WKX');</script>
+  <!-- LGPD: o GTM (GTM-NZN99WKX) e o Clarity (zeppc6o10v) só carregam DEPOIS do aceite no aviso de cookies (lh_consent = granted).
+       Antes disso (ou se a pessoa recusar) nada deles é baixado, nenhum cookie é gravado e nenhum evento sai.
+       Consent Mode do Google: tudo "denied" por padrão; o Cadê o Lead chama gtag("consent","update") ao aceitar. -->
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
+  gtag('consent','default',{ad_storage:'denied',analytics_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+  (function(){
+    function ok(){try{return localStorage.getItem('lh_consent')==='granted'||localStorage.getItem('sr_consent')==='granted'}catch(e){return false}}
+    var on=false;
+    window.srLiberarRastreio=function(){
+      if(on||!ok())return;on=true;
+      gtag('consent','update',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-NZN99WKX');
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "zeppc6o10v");
+      try{window.clarity('consentv2',{ad_Storage:'granted',analytics_Storage:'granted'})}catch(e){}
+    };
+    window.srLiberarRastreio();
+    // aceite no aviso do Cadê o Lead: libera na hora, sem recarregar a página
+    function rever(){if(on)return;setTimeout(window.srLiberarRastreio,150);setTimeout(window.srLiberarRastreio,900);setTimeout(window.srLiberarRastreio,2500)}
+    document.addEventListener('click',rever,true);document.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')rever()},true);
+  })();
+  </script>
   <!-- End Google Tag Manager -->
   <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "zeppc6o10v");
-  </script>
+  <!-- (carregado pelo bloco acima, só depois do aceite) -->
   <!-- End Microsoft Clarity -->
   <!-- Cadê o Lead -->
   <script src="https://cadeolead.com.br/tracker.js" data-key="pk_4b12a4bc3ca8487f8f5b4b126a5390c2" data-consent="banner" async></script>
@@ -47,8 +66,7 @@
 </head>
 <body data-tema="usucapiao" data-static>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NZN99WKX"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- LGPD: sem JavaScript não há aviso de cookies nem consentimento, então o GTM não é carregado aqui -->
 <!-- End Google Tag Manager (noscript) -->
 
 <!-- ============ 1. CABEÇALHO ============ -->

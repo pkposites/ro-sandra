@@ -37,3 +37,8 @@ A `/usucapiao` tem modelo próprio: `src/usucapiao.template.html` + `src/usucapi
 bloco GTM/Clarity/Cadê o Lead, noscript do GTM, ícones, rodapé, botão fixo e modal (só o título e o subtítulo do modal mudam).
 `TEMAS.usucapiao` em `script.js` continua existindo só para o modal pré-selecionar "Usucapião" e para o caminho antigo `?tema=usucapiao`.
 Textos pendentes de aprovação das advogadas: `docs/usucapiao-textos-para-aprovacao.md`.
+
+## LGPD e contato direto
+O GTM e o Clarity só carregam depois do aceite no aviso de cookies, e o botão de WhatsApp abre a conversa direto, com mensagem pronta
+(`CONFIG.usarFormulario = false` em `script.js`; o formulário fica oculto, não apagado). A conversão (`generate_lead` + API de Conversões, mesmo `event_id`)
+continua. Detalhes, mensagens e pendências em `docs/lgpd-e-contato-direto.md`.

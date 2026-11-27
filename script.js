@@ -7,8 +7,12 @@ const CONFIG = {
   instagram: "",                 // ex.: https://www.instagram.com/perfil/
   endereco: "",                  // ex.: "Rua X, 123 · São Paulo/SP · Atendimento online e presencial"
 
-  gtmId: "GTM-NZN99WKX",         // snippet fixo no <head> e <noscript> no <body> do index.html
+  gtmId: "GTM-NZN99WKX",         // carregado no <head> (src/index.template.html), SÓ depois do aceite no aviso de cookies (LGPD)
   metaPixelId: "",               // NÃO preencher: o Pixel (1470345208372047) é carregado pelo GTM; preencher aqui duplicaria PageView/Lead
+
+  // false = o botão leva direto ao WhatsApp, com mensagem pronta sobre o assunto (o formulário fica oculto, mas o código e o HTML seguem aqui).
+  // true  = volta a abrir o formulário (nome, telefone, serviço) antes do WhatsApp.
+  usarFormulario: false,
 
   // Opcional: webhook próprio (JSON via POST) além do Cadê o Lead.
   leadEndpoint: "",
@@ -18,6 +22,7 @@ const CONFIG = {
 const TEMAS = {
   obra: {
     servico: "Atraso na entrega de obra / imóvel na planta",
+    mensagem: "Olá! Vim pelo site e preciso de orientação sobre atraso na entrega de obra / imóvel na planta.",
     eyebrow: "Atraso na entrega da obra",
     h1: "A construtora atrasou a obra? <em>Você tem direitos.</em>",
     lead: "Analisamos o seu contrato e as circunstâncias do atraso, da recusa na entrega das chaves ou dos vícios construtivos, e orientamos sobre as medidas cabíveis, inclusive a busca por indenização.",
@@ -25,6 +30,7 @@ const TEMAS = {
   },
   contratos: {
     servico: "Contrato de compra e venda / distrato",
+    mensagem: "Olá! Vim pelo site e preciso de orientação sobre contrato de compra e venda, distrato ou locação de imóvel.",
     eyebrow: "Contratos imobiliários",
     h1: "Vai assinar ou precisa desfazer um contrato de imóvel? <em>Fale antes de decidir.</em>",
     lead: "Elaboramos, analisamos e revisamos contratos de compra e venda e de locação, e atuamos em distratos, rescisões e conflitos para prevenir prejuízos e proteger seus direitos.",
@@ -32,6 +38,7 @@ const TEMAS = {
   },
   inventario: {
     servico: "Inventário e partilha de imóveis",
+    mensagem: "Olá! Vim pelo site e preciso de orientação sobre inventário e partilha de imóveis.",
     eyebrow: "Inventário e regularização",
     h1: "Inventário parado ou imóvel que não está no seu nome? <em>Regularize com segurança.</em>",
     lead: "Inventário parado, contrato de gaveta, usucapião ou documentação irregular. Analisamos o seu caso e indicamos como regularizar a propriedade com segurança.",
@@ -39,6 +46,7 @@ const TEMAS = {
   },
   usucapiao: {
     servico: "Usucapião",
+    mensagem: "Olá! Vim pelo site e gostaria de saber se a usucapião cabe no meu caso.",
     eyebrow: "Usucapião",
     h1: "Mora há anos no imóvel sem escritura? <em>Veja a usucapião.</em>",
     lead: "A usucapião reconhece a propriedade de quem exerce a posse do imóvel há anos, quando os requisitos legais são atendidos. Analisamos o seu caso e orientamos sobre o procedimento adequado.",
@@ -46,6 +54,7 @@ const TEMAS = {
   },
   gaveta: {
     servico: "Regularização de imóvel",
+    mensagem: "Olá! Vim pelo site e preciso de orientação para regularizar um imóvel comprado por contrato de gaveta.",
     eyebrow: "Contrato de gaveta",
     h1: "Comprou o imóvel por contrato de gaveta? <em>Regularize no seu nome.</em>",
     lead: "“Quem não registra não é dono.” A falta de registro dificulta vender, financiar e transferir o imóvel. Analisamos o seu caso e indicamos o caminho para regularizar a propriedade.",
@@ -56,6 +65,7 @@ const TEMAS = {
 
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const MENSAGEM_GERAL = "Olá! Vim pelo site e gostaria de falar com as advogadas sobre um assunto do meu imóvel.";
 const waUrl = (t) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
 window.dataLayer = window.dataLayer || [];
 
@@ -108,32 +118,17 @@ const TEMA = document.body.dataset.tema || temaAtual();
 
 /* ---------- Consentimento (LGPD) ---------- */
 // O aviso de cookies é o do Cadê o Lead (data-consent="banner"); a escolha dele fica em lh_consent.
+// O GTM e o Clarity só são carregados depois do aceite (bloco no <head>, src/index.template.html, função srLiberarRastreio).
 const consentido = () => { try { return localStorage.getItem("lh_consent") === "granted" || localStorage.getItem("sr_consent") === "granted"; } catch (e) { return false; } };
-
-function carregarTracking() {
-  if (!consentido() || window.__srTrack) return;
-  window.__srTrack = true;
-  if (CONFIG.gtmId && !document.querySelector('script[src*="googletagmanager.com/gtm.js"]')) {
-    dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
-    const s = document.createElement("script");
-    s.async = true; s.src = `https://www.googletagmanager.com/gtm.js?id=${CONFIG.gtmId}`;
-    document.head.appendChild(s);
-  }
-  if (CONFIG.metaPixelId) {
-    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-    fbq("init", CONFIG.metaPixelId); fbq("track", "PageView");
-  }
-}
-function aplicarConsent(v) {
+// Eventos para o GTM só entram no dataLayer com consentimento: sem aceite o GTM nem existe, e um evento guardado na fila
+// seria entregue a ele se a pessoa aceitar mais tarde.
+const pushDL = (obj) => { if (consentido()) dataLayer.push(obj); };
+function aplicarConsent(v) { // usado só pelo formulário (CONFIG.usarFormulario)
   try { localStorage.setItem("sr_consent", v ? "granted" : "denied"); } catch (e) {}
   window.lhConsent = v;
   try { window.LeadHub && window.LeadHub.consent && window.LeadHub.consent(v); } catch (e) {}
-  if (v) carregarTracking();
+  if (v && window.srLiberarRastreio) window.srLiberarRastreio();
 }
-carregarTracking();
-// Se a pessoa aceitar no aviso do Cadê o Lead, libera o restante (Pixel) sem precisar recarregar
-let _tent = 0; const _t = setInterval(() => { if (consentido()) { carregarTracking(); clearInterval(_t); } else if (++_tent > 400) clearInterval(_t); }, 1500);
-
 
 /* ---------- Rodapé / fotos ---------- */
 if (CONFIG.instagram) { const i = $("#fInsta"); i.href = CONFIG.instagram; i.hidden = false; i.target = "_blank"; i.rel = "noopener"; }
@@ -184,8 +179,8 @@ function abrirForm(local, area) {
   else if (!form.servico.value) form.servico.value = "";
   $("#leadConsentBox").hidden = consentido();
   err.hidden = true;
-  dataLayer.push({ event: "whatsapp_open_form", local, area: ctx.area || "geral" });
-  dataLayer.push({ event: "modal_open", pagina: PAGINA });
+  pushDL({ event: "whatsapp_open_form", local, area: ctx.area || "geral" });
+  pushDL({ event: "modal_open", pagina: PAGINA });
   modal.showModal ? modal.showModal() : modal.setAttribute("open", "");
   setTimeout(() => form.nome.focus(), 50);
 }
@@ -204,19 +199,52 @@ modal.addEventListener("close", resetarModal);
 $("#leadClose").onclick = fechar;
 modal.addEventListener("click", (e) => { if (e.target === modal) fechar(); });
 
+/* ---------- Contato direto: o botão abre o WhatsApp com a mensagem pronta (CONFIG.usarFormulario = false) ---------- */
+// A conversão continua a mesma: generate_lead (Google Ads / GTM) com event_id + Lead server-side (API de Conversões) com o MESMO event_id,
+// além do clique registrado no Cadê o Lead (LeadHub.whatsappUrl). Tudo isso só com consentimento, exceto o registro anônimo do Cadê o Lead.
+function contatoDireto(local, area) {
+  const a = area || TEMA || "";
+  const servico = TEMAS[a]?.servico || "Geral";
+  const texto = TEMAS[a]?.mensagem || MENSAGEM_GERAL;
+  const url = waUrl(texto);
+  let destino = url;
+  try {
+    if (window.LeadHub) {
+      window.LeadHub.set({ "Serviço": servico, "Botão clicado": local, "Tema da página": a || "geral" });
+      destino = window.LeadHub.whatsappUrl(url);
+    }
+  } catch (x) { console.warn("Cadê o Lead indisponível", x); }
+  const leadEventId = novoEventId("lead");
+  pushDL({ event: "whatsapp_open_form", local, area: a || "geral" }); // mantido: é o "clique no botão" dos relatórios antigos
+  pushDL({ event: "generate_lead", servico, local, area: a || "geral", pagina: PAGINA, event_id: leadEventId });
+  if (consentido()) enviarCapi({ event_name: "Lead", event_id: leadEventId, event_source_url: location.href, fbp: lerCookie("_fbp"), fbc: lerCookie("_fbc"), fbclid: new URLSearchParams(location.search).get("fbclid") || "", servico, area: a || "geral", test_event_code: metaTesteCodigo() });
+  pushDL({ event: "whatsapp_click", pagina: PAGINA, origem: local === "flutuante" ? "flutuante" : "direto" });
+  if (CONFIG.leadEndpoint) {
+    try { fetch(CONFIG.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ servico, local, pagina: location.href }), keepalive: true }); } catch (x) {}
+  }
+  // sem "noopener" na lista de recursos o window.open devolve a janela (com noopener devolveria sempre null e não dá para saber se foi bloqueado)
+  let aba = null;
+  try { aba = window.open(destino, "_blank"); if (aba) aba.opener = null; } catch (x) {}
+  if (!aba || aba.closed) location.href = destino; // bloqueado: abre na mesma aba
+}
+
+const contato = (el) => (CONFIG.usarFormulario ? abrirForm(el.dataset.wa, el.dataset.area) : contatoDireto(el.dataset.wa, el.dataset.area));
 $$("[data-wa]").forEach((el) => {
-  if (el.tagName === "A") el.setAttribute("href", "#contato-whatsapp");
-  el.addEventListener("click", (e) => { e.preventDefault(); abrirForm(el.dataset.wa, el.dataset.area); });
+  if (el.tagName === "A") el.setAttribute("href", CONFIG.usarFormulario ? "#contato-whatsapp" : waUrl(TEMAS[el.dataset.area || TEMA]?.mensagem || MENSAGEM_GERAL));
+  if (el.tagName === "A" && !CONFIG.usarFormulario) { el.setAttribute("target", "_blank"); el.setAttribute("rel", "noopener"); }
+  el.addEventListener("click", (e) => { e.preventDefault(); contato(el); });
   // elementos que não são link/botão (ex.: a foto do topo) também respondem ao teclado
   if (el.tagName !== "A" && el.tagName !== "BUTTON") {
-    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrirForm(el.dataset.wa, el.dataset.area); } });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); contato(el); } });
   }
 });
+// formulário ocultado por enquanto (o HTML e o código ficam; ligue CONFIG.usarFormulario para voltar)
+modal.hidden = !CONFIG.usarFormulario;
 
 /* ---------- Abre o modal quando a URL chega em #contato-whatsapp ou #leadModal (ex.: CTA aberto em nova aba) ---------- */
 // O id está dentro do <dialog> fechado, então o navegador não mostra nada sozinho: abrimos o modal no carregamento e a cada hashchange.
 const HASHES_MODAL = ["#contato-whatsapp", "#leadModal"];
-function abrirPeloHash() { if (HASHES_MODAL.includes(location.hash) && !modal.open) abrirForm("hash"); }
+function abrirPeloHash() { if (CONFIG.usarFormulario && HASHES_MODAL.includes(location.hash) && !modal.open) abrirForm("hash"); }
 abrirPeloHash();
 addEventListener("hashchange", abrirPeloHash);
 
@@ -248,13 +276,13 @@ form.addEventListener("submit", (e) => {
 
   // o Lead do Pixel sai pelo GTM (tag "Meta Pixel - Lead", lê event_id do dataLayer); o do servidor sai daqui, com o MESMO event_id
   const leadEventId = novoEventId("lead");
-  dataLayer.push({ event: "generate_lead", servico, local: ctx.local, area: ctx.area || "geral", pagina: PAGINA, event_id: leadEventId });
-  enviarCapi({ event_name: "Lead", event_id: leadEventId, event_source_url: location.href, fbp: lerCookie("_fbp"), fbc: lerCookie("_fbc"), fbclid: new URLSearchParams(location.search).get("fbclid") || "", nome, telefone: tel, servico, area: ctx.area || "geral", test_event_code: metaTesteCodigo() });
+  pushDL({ event: "generate_lead", servico, local: ctx.local, area: ctx.area || "geral", pagina: PAGINA, event_id: leadEventId });
+  if (consentido()) enviarCapi({ event_name: "Lead", event_id: leadEventId, event_source_url: location.href, fbp: lerCookie("_fbp"), fbc: lerCookie("_fbc"), fbclid: new URLSearchParams(location.search).get("fbclid") || "", nome, telefone: tel, servico, area: ctx.area || "geral", test_event_code: metaTesteCodigo() });
   if (CONFIG.leadEndpoint) {
     try { fetch(CONFIG.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome, telefone: tel, servico, local: ctx.local, pagina: location.href }), keepalive: true }); } catch (x) {}
   }
   // clique que abre o wa.me: origem "flutuante" se o formulário foi aberto pelo botão fixo; senão "modal"
-  dataLayer.push({ event: "whatsapp_click", pagina: PAGINA, origem: ctx.local === "flutuante" ? "flutuante" : "modal" });
+  pushDL({ event: "whatsapp_click", pagina: PAGINA, origem: ctx.local === "flutuante" ? "flutuante" : "modal" });
   // sem "noopener" na lista de recursos o window.open devolve a janela (com noopener devolveria sempre null e não dá para saber se foi bloqueado)
   let aba = null;
   try { aba = window.open(destino, "_blank"); if (aba) aba.opener = null; } catch (x) {}
@@ -284,7 +312,7 @@ if (!TEMA) {
 // Cada botão rola (suave, descontando o header fixo via scroll-padding-top) até o TÍTULO do bloco do tema
 // (ex.: "01 Imóvel na planta e atraso na entrega da obra") e destaca o item correspondente na lista
 $$(".topics a").forEach((a) => a.addEventListener("click", (e) => {
-  dataLayer.push({ event: "topic_click", tema: a.textContent.trim() });
+  pushDL({ event: "topic_click", tema: a.textContent.trim() });
   const bloco = $(a.getAttribute("href")), item = $("#" + a.dataset.item);
   if (!bloco) return;
   e.preventDefault();
